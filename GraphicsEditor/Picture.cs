@@ -57,30 +57,29 @@ namespace GraphicsEditor
             throw new NotImplementedException();
         }
 
-        public void RemoveAt(List<int> idInts)
+        public void RemoveAt(CompoundIndex index)
         {
             lock (lockObject)
             {
-                if (idInts.Count != 1)
+                if (index.Size != 1)
                 {
-                    shapes[idInts[0]].RemoveAt(idInts.GetRange(1, idInts.Count - 1));
+                    shapes[index.Top].RemoveAt(index.Sub);
                 }
                 else
                 {
-                    shapes.RemoveAt(idInts[0]);
+                    shapes.RemoveAt(index.Top);
                 }
             }
-
         }
 
-        public IShape GetShapeAt(List<int> idInts)
+        public IShape GetShapeAt(CompoundIndex index)
         {
-            List<IShape> shapeCopy;
+            List<IShape> copy;
             lock (lockObject)
             {
-                shapeCopy = shapes;
+                copy = shapes;
             }
-            return idInts.Count != 1 ? shapeCopy[idInts[0]].GetShapeAt(idInts.GetRange(1, idInts.Count - 1)) : shapeCopy[idInts[0]];
+            return index.Size == 1 ? copy[index.Top] : copy[index.Top].GetShapeAt(index.Sub);
         }
 
         public string GetStringRepresentation(string compoundIndex)

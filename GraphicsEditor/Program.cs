@@ -2,6 +2,7 @@
 using ConsoleUI;
 using DrawablesUI;
 using GraphicsEditor.Commands;
+using GraphicsEditor.Commands.Manage;
 using GraphicsEditor.Commands.Shape;
 
 namespace GraphicsEditor

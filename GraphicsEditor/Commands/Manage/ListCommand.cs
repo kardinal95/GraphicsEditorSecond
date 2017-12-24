@@ -1,7 +1,7 @@
 ﻿using System;
 using ConsoleUI;
 
-namespace GraphicsEditor.Commands
+namespace GraphicsEditor.Commands.Manage
 {
     class ListCommand : ICommand
     {

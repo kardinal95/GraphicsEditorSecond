@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using DrawablesUI;
 
@@ -25,12 +24,12 @@ namespace GraphicsEditor.Shapes
             throw new NotImplementedException();
         }
 
-        public void RemoveAt(List<int> idInts)
+        public void RemoveAt(CompoundIndex index)
         {
             throw new InvalidOperationException("Non-compound shape do not contain sub elements!");
         }
 
-        public IShape GetShapeAt(List<int> idInts)
+        public IShape GetShapeAt(CompoundIndex index)
         {
             throw new InvalidOperationException("Non-compound shape do not contain sub elements!");
         }

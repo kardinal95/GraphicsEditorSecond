@@ -31,7 +31,7 @@ namespace GraphicsEditor.Commands.Shape
                 Console.WriteLine($"Для получения справки введите \'explain {Name}\'");
                 return;
             }
-            var errors = CommandLib.ParseArguments<float>(parameters, out var parsed);
+            var parsed = CommandLib.ParseArguments<float>(parameters, out var errors);
             if (errors.Count != 0)
             {
                 Console.WriteLine($"Обнаружены ошибки ввода: {string.Join(", ", errors)}");

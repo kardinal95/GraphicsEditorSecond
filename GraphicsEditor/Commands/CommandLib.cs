@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands
 {
     static class CommandLib
     {
-        public static List<string> ParseArguments<T>(IEnumerable<string> args, out List<T> result)
+        public static List<T> ParseArguments<T>(IEnumerable<string> args, out List<string> errors)
             where T : IConvertible
         {
-            var errors = new List<string>();
-            result = new List<T>();
+            errors = new List<string>();
+            var result = new List<T>();
             foreach (var argument in args)
             {
                 try
@@ -24,23 +23,21 @@ namespace GraphicsEditor.Commands
                     errors.Add(argument);
                 }
             }
-            return errors;
+            return result;
         }
 
-        public static List<List<int>> ParseIndexes(IEnumerable<string> args,
-                                                   out List<string> errors)
+        public static IEnumerable<CompoundIndex> ParseIndexes(
+            IEnumerable<string> arguments, out List<string> errors)
         {
             errors = new List<string>();
-            var result = new List<List<int>>();
-            foreach (var argument in args)
+            var result = new List<CompoundIndex>();
+            foreach (var argument in arguments)
             {
-                var nums = argument.Split(':');
-                try
+                if (CompoundIndex.TryParse(argument, out var parsedIndex))
                 {
-                    var current = nums.Select(num => Convert.ToInt32(num)).ToList();
-                    result.Add(current);
+                    result.Add(parsedIndex);
                 }
-                catch
+                else
                 {
                     errors.Add(argument);
                 }
@@ -48,29 +45,30 @@ namespace GraphicsEditor.Commands
             return result;
         }
 
-        public static List<List<int>> CheckIndexesExistence(IEnumerable<List<int>> indexes,
-                                                            out List<string> errors, IShape root)
+        public static List<CompoundIndex> GetExisting(IEnumerable<CompoundIndex> indexes,
+                                                      out List<string> errors, IShape root)
         {
             errors = new List<string>();
-            var result = new List<List<int>>();
+            var result = new List<CompoundIndex>();
+            CompoundIndex previous = null;
             foreach (var compoundIndex in indexes)
             {
                 try
                 {
-                    root.GetShapeAt(compoundIndex);
-                    if (!result.Contains(compoundIndex))
+                    if (compoundIndex.Equals(previous))
                     {
-                        result.Add(compoundIndex);
+                        continue;
                     }
+                    root.GetShapeAt(compoundIndex);
+                    result.Add(compoundIndex);
+                    previous = compoundIndex;
                 }
                 catch
                 {
-                    var compoundString = string.Join(":", compoundIndex);
-                    errors.Add(compoundString);
+                    errors.Add(compoundIndex.ToString());
                 }
             }
-            result.Sort((first, second) =>
-                            string.CompareOrdinal(string.Join("", first), string.Join("", second)));
+            result.Sort();
             result.Reverse();
             return result;
         }

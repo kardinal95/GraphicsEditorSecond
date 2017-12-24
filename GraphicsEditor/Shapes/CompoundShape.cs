@@ -27,27 +27,28 @@ namespace GraphicsEditor.Shapes
             throw new NotImplementedException();
         }
 
-        public void RemoveAt(List<int> idInts)
+        public void RemoveAt(CompoundIndex index)
         {
-            if (idInts.Count != 1)
+            if (index.Size != 1)
             {
-                Shapes[idInts[0]].RemoveAt(idInts.GetRange(1, idInts.Count - 1));
+                Shapes[index.Top].RemoveAt(index.Sub);
             }
             else
             {
-                Shapes.RemoveAt(idInts[0]);
+                Shapes.RemoveAt(index.Top);
             }
         }
 
-        public IShape GetShapeAt(List<int> idInts)
+        public IShape GetShapeAt(CompoundIndex index)
         {
-            return idInts.Count != 1 ? Shapes[idInts[0]].GetShapeAt(idInts.GetRange(1, idInts.Count - 1)) : Shapes[idInts[0]];
+            return index.Size == 1 ? Shapes[index.Top] : Shapes[index.Top].GetShapeAt(index.Sub);
         }
 
         public string GetStringRepresentation(string compoundIndex)
         {
             var compound = new List<string> {$"[{compoundIndex}] Составная фигура"};
-            compound.AddRange(Shapes.Select((t, i) => t.GetStringRepresentation($"{compoundIndex}:{i}")));
+            compound.AddRange(
+                Shapes.Select((t, i) => t.GetStringRepresentation($"{compoundIndex}:{i}")));
             return string.Join("\n", compound);
         }
     }

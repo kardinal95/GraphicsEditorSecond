@@ -43,12 +43,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandLib.cs" />
-    <Compile Include="Commands\UngroupCommand.cs" />
-    <Compile Include="Commands\ListCommand.cs" />
-    <Compile Include="Commands\GroupCommand.cs" />
-    <Compile Include="Commands\RemoveCommand.cs" />
+    <Compile Include="Commands\Manage\BaseManageCommand.cs" />
+    <Compile Include="Commands\Manage\UngroupCommand.cs" />
+    <Compile Include="Commands\Manage\ListCommand.cs" />
+    <Compile Include="Commands\Manage\GroupCommand.cs" />
+    <Compile Include="Commands\Manage\RemoveCommand.cs" />
     <Compile Include="Commands\Shape\BaseShapeCommand.cs" />
     <Compile Include="Commands\Shape\PointCommand.cs" />
+    <Compile Include="CompoundIndex.cs" />
     <Compile Include="Shapes\CompoundShape.cs" />
     <Compile Include="Shapes\PointShape.cs" />
     <Compile Include="Transformation.cs" />

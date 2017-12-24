@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using DrawablesUI;
+﻿using DrawablesUI;
 
 namespace GraphicsEditor.Shapes
 {
@@ -7,9 +6,9 @@ namespace GraphicsEditor.Shapes
     {
         void Transform(Transformation trans);
 
-        void RemoveAt(List<int> idInts);
+        void RemoveAt(CompoundIndex index);
 
-        IShape GetShapeAt(List<int> idInts);
+        IShape GetShapeAt(CompoundIndex index);
 
         string GetStringRepresentation(string compoundIndex);
     }
