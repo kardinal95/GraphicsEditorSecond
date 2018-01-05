@@ -15,11 +15,11 @@ namespace GraphicsEditor.Commands.Shape
 
         public override string[] Synonyms => new[] { "pt" };
 
-        protected override IShape CreateShape(List<float> parsed)
+        protected override IShape CreateShape(List<float> parsed, CompoundShape core)
         {
-            return new PointShape(parsed[0], parsed[1]);
+            return new PointShape(parsed[0], parsed[1], core);
         }
 
-        public PointCommand(Picture picture) : base(picture) { }
+        public PointCommand(CompoundShape core) : base(core) { }
     }
 }

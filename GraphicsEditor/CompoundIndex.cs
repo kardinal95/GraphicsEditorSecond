@@ -12,6 +12,11 @@ namespace GraphicsEditor
 
         private readonly List<int> subIndexes;
 
+        public CompoundIndex()
+        {
+            subIndexes = new List<int>();
+        }
+
         private CompoundIndex(IEnumerable<int> indexList)
         {
             subIndexes = indexList.ToList();
@@ -28,8 +33,10 @@ namespace GraphicsEditor
                 {
                     return false;
                 }
+
                 indexList.Add(partInt);
             }
+
             index = new CompoundIndex(indexList);
             return true;
         }
@@ -41,6 +48,17 @@ namespace GraphicsEditor
             return sub;
         }
 
+        public CompoundIndex JoinRight(int index)
+        {
+            subIndexes.Add(index);
+            return this;
+        }
+
+        public void JoinLeft(int index)
+        {
+            subIndexes.Insert(0, index);
+        }
+
         public override string ToString()
         {
             return string.Join(":", subIndexes);
@@ -48,14 +66,11 @@ namespace GraphicsEditor
 
         public bool Equals(CompoundIndex other)
         {
-            if (other is null)
+            if (Size != other?.Size)
             {
                 return false;
             }
-            if (Size != other.Size)
-            {
-                return false;
-            }
+
             for (var i = Size; i < other.Size; i++)
             {
                 if (subIndexes[i] != other.subIndexes[i])
@@ -63,6 +78,7 @@ namespace GraphicsEditor
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -78,6 +94,7 @@ namespace GraphicsEditor
                     {
                         return Sub.CompareTo(otherIndex.Sub);
                     }
+
                     return comparison;
                 default:
                     throw new ArgumentException("Object is not a Compound Index!");

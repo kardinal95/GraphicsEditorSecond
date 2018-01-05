@@ -1,9 +1,9 @@
 ﻿using System;
 using ConsoleUI;
 using DrawablesUI;
-using GraphicsEditor.Commands;
 using GraphicsEditor.Commands.Manage;
 using GraphicsEditor.Commands.Shape;
+using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor
 {
@@ -11,8 +11,8 @@ namespace GraphicsEditor
     {
         public static void Main(string[] args)
         {
-            var picture = new Picture();
-            var ui = new DrawableGUI(picture);
+            var core = new CompoundShape();
+            var ui = new DrawableGUI(core);
             var app = new Application();
 
             app.AddCommand(new ExitCommand(app));
@@ -20,15 +20,15 @@ namespace GraphicsEditor
             app.AddCommand(new HelpCommand(app));
 
             // Shapes
-            app.AddCommand(new PointCommand(picture));
+            app.AddCommand(new PointCommand(core));
 
             // Other
-            app.AddCommand(new ListCommand(picture));
-            app.AddCommand(new RemoveCommand(picture));
-            app.AddCommand(new GroupCommand(picture));
-            app.AddCommand(new UngroupCommand(picture));
+            app.AddCommand(new ListCommand(core));
+            app.AddCommand(new RemoveCommand(core));
+            app.AddCommand(new GroupCommand(core));
+            app.AddCommand(new UngroupCommand(core));
 
-            picture.Changed += ui.Refresh;
+            core.Changed += ui.Refresh;
             ui.Start();
             app.Run(Console.In);
             ui.Stop();

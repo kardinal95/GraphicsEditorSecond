@@ -54,7 +54,6 @@
     <Compile Include="Shapes\CompoundShape.cs" />
     <Compile Include="Shapes\PointShape.cs" />
     <Compile Include="Transformation.cs" />
-    <Compile Include="Picture.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\IShape.cs" />

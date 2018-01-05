@@ -5,21 +5,123 @@ using DrawablesUI;
 
 namespace GraphicsEditor.Shapes
 {
-    class CompoundShape : IShape
+    public class CompoundShape : IShape
     {
-        public CompoundShape(IList<IShape> shapes)
+        public CompoundShape Parent { get; set; }
+        public CompoundIndex FullIndex => GetFullIndex();
+        private readonly IList<IShape> shapes;
+        public event Action Changed;
+
+        private readonly object lockObject = new object();
+
+        // Constructors
+        public CompoundShape()
         {
-            Shapes = shapes;
+            Parent = null;
+            shapes = new List<IShape>();
         }
 
-        public IList<IShape> Shapes { get; }
+        public CompoundShape(IList<IShape> shapes, CompoundShape parent = null)
+        {
+            this.shapes = shapes;
+            Parent = parent;
+        }
 
+        // Compound shape exclusive
+
+        public void Add(IShape shape)
+        {
+            lock (lockObject)
+            {
+                shapes.Add(shape);
+                Changed?.Invoke();
+            }
+        }
+
+        private void Insert(IShape shape, int position)
+        {
+            lock (lockObject)
+            {
+                shapes.Insert(position, shape);
+                Changed?.Invoke();
+            }
+        }
+
+        public void Remove(IShape shape)
+        {
+            lock (lockObject)
+            {
+                shapes.Remove(shape);
+                if (shapes.Count == 1 && Parent != null)
+                {
+                    var pos = Parent.GetPos(this);
+                    Parent.Insert(shapes[0], pos);
+                    shapes[0].Parent = Parent;
+                    Parent.Remove(this);
+                }
+
+                Changed?.Invoke();
+            }
+        }
+
+        public void Ungroup()
+        {
+            if (Parent is null)
+            {
+                throw new InvalidOperationException("Cannot ungroup core shape");
+            }
+
+            lock (lockObject)
+            {
+                var pos = Parent.GetPos(this);
+                foreach (var shape in shapes.Reverse())
+                {
+                    shape.Parent = Parent;
+                    Parent.Insert(shape, pos);
+                }
+
+                Parent.Remove(this);
+            }
+        }
+
+        public int GetPos(IShape shape)
+        {
+            int result;
+            lock (lockObject)
+            {
+                result = shapes.IndexOf(shape);
+            }
+
+            return result;
+        }
+
+        // IShape
         public void Draw(IDrawer drawer)
         {
-            foreach (var shape in Shapes)
+            lock (lockObject)
             {
-                shape.Draw(drawer);
+                foreach (var shape in shapes)
+                {
+                    shape.Draw(drawer);
+                }
             }
+        }
+
+        public IShape GetShapeAt(CompoundIndex index)
+        {
+            IShape result;
+            lock (lockObject)
+            {
+                result = index.Size == 0 ? this : shapes[index.Top].GetShapeAt(index.Sub);
+            }
+
+            return result;
+        }
+
+        private CompoundIndex GetFullIndex()
+        {
+            return Parent == null ? new CompoundIndex()
+                : Parent.FullIndex.JoinRight(Parent.GetPos(this));
         }
 
         public void Transform(Transformation trans)
@@ -27,29 +129,20 @@ namespace GraphicsEditor.Shapes
             throw new NotImplementedException();
         }
 
-        public void RemoveAt(CompoundIndex index)
+        public override string ToString()
         {
-            if (index.Size != 1)
+            var result = "";
+            if (Parent != null)
             {
-                Shapes[index.Top].RemoveAt(index.Sub);
+                result += $"[{FullIndex}] Составная фигура\n";
             }
-            else
+
+            lock (lockObject)
             {
-                Shapes.RemoveAt(index.Top);
+                result = shapes.Aggregate(result, (current, shape) => current + shape.ToString());
             }
-        }
 
-        public IShape GetShapeAt(CompoundIndex index)
-        {
-            return index.Size == 1 ? Shapes[index.Top] : Shapes[index.Top].GetShapeAt(index.Sub);
-        }
-
-        public string GetStringRepresentation(string compoundIndex)
-        {
-            var compound = new List<string> {$"[{compoundIndex}] Составная фигура"};
-            compound.AddRange(
-                Shapes.Select((t, i) => t.GetStringRepresentation($"{compoundIndex}:{i}")));
-            return string.Join("\n", compound);
+            return result;
         }
     }
 }

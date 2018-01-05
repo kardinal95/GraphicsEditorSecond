@@ -1,40 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Manage
 {
     class RemoveCommand : BaseManageCommand
     {
-        private readonly Picture picture;
-
         public override string Name => "remove";
         public override string Help => "Удалить фигуры с картинки";
 
-        public override string Description => "Удаляет фигуры с указанными индексами\n" +
-                                              "Использование: \'remove x y ..\', где x, y, .. - индексы фигур в команде list";
+        public override string Description =>
+            "Удаляет фигуры с указанными индексами\n" +
+            "Использование: \'remove x y ..\', где x, y, .. - индексы фигур в команде list";
 
         public override string[] Synonyms => new[] {"rm"};
-        protected override int Argsnum => 0;
+        protected override int MinArg => 1;
+        protected override int MaxArg => -1;
 
-        protected override void MakeChanges(List<CompoundIndex> indexes)
+        protected override void MakeChanges(List<IShape> shapes)
         {
-            foreach (var index in indexes)
+            foreach (var shape in shapes)
             {
-                try
-                {
-                    picture.RemoveAt(index);
-                    Console.WriteLine($"Удалена фигура с индексом {index}");
-                }
-                catch
-                {
-                    Console.WriteLine("Не найдена фигура с индексом " + $"{index}!");
-                }
+                shape.Parent.Remove(shape);
             }
         }
 
-        public RemoveCommand(Picture picture) : base(picture)
-        {
-            this.picture = picture;
-        }
+        public RemoveCommand(CompoundShape core) : base(core) { }
     }
 }

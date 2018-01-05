@@ -23,6 +23,7 @@ namespace GraphicsEditor.Commands
                     errors.Add(argument);
                 }
             }
+
             return result;
         }
 
@@ -35,41 +36,63 @@ namespace GraphicsEditor.Commands
             {
                 if (CompoundIndex.TryParse(argument, out var parsedIndex))
                 {
-                    result.Add(parsedIndex);
+                    if (Collides(result, parsedIndex))
+                    {
+                        errors.Add(argument);
+                    }
+                    else
+                    {
+                        result.Add(parsedIndex);
+                    }
                 }
                 else
                 {
                     errors.Add(argument);
                 }
             }
+
             return result;
         }
 
-        public static List<CompoundIndex> GetExisting(IEnumerable<CompoundIndex> indexes,
-                                                      out List<string> errors, IShape root)
+        private static bool Collides(IEnumerable<CompoundIndex> source, CompoundIndex index)
+        {
+            foreach (var compoundIndex in source)
+            {
+                if (compoundIndex.Size == 1 && index.Size == 1)
+                {
+                    continue;
+                }
+                if (compoundIndex.ToString().StartsWith(index.ToString()))
+                {
+                    return true;
+                }
+
+                if (index.ToString().StartsWith(compoundIndex.ToString()))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static List<IShape> GetExisting(IEnumerable<CompoundIndex> indexes,
+                                               out List<string> errors, IShape root)
         {
             errors = new List<string>();
-            var result = new List<CompoundIndex>();
-            CompoundIndex previous = null;
+            var result = new List<IShape>();
             foreach (var compoundIndex in indexes)
             {
                 try
                 {
-                    if (compoundIndex.Equals(previous))
-                    {
-                        continue;
-                    }
-                    root.GetShapeAt(compoundIndex);
-                    result.Add(compoundIndex);
-                    previous = compoundIndex;
+                    var shape = root.GetShapeAt(compoundIndex);
+                    result.Add(shape);
                 }
                 catch
                 {
                     errors.Add(compoundIndex.ToString());
                 }
             }
-            result.Sort();
-            result.Reverse();
             return result;
         }
     }

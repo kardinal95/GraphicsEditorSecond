@@ -13,14 +13,14 @@ namespace GraphicsEditor.Commands.Shape
         public abstract string[] Synonyms { get; }
 
         protected abstract int Argsnum { get; } // Количество аргументов для команды
-        private readonly Picture picture;
+        private readonly CompoundShape core;
 
-        protected BaseShapeCommand(Picture picture)
+        protected BaseShapeCommand(CompoundShape core)
         {
-            this.picture = picture;
+            this.core = core;
         }
 
-        protected abstract IShape CreateShape(List<float> parsed);
+        protected abstract IShape CreateShape(List<float> parsed, CompoundShape core);
 
         public void Execute(params string[] parameters)
         {
@@ -37,7 +37,7 @@ namespace GraphicsEditor.Commands.Shape
                 Console.WriteLine($"Обнаружены ошибки ввода: {string.Join(", ", errors)}");
                 return;
             }
-            picture.Add(CreateShape(parsed));
+            core.Add(CreateShape(parsed, core));
         }
     }
 }

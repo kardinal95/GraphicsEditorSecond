@@ -1,30 +1,26 @@
 ﻿using System;
 using ConsoleUI;
+using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Manage
 {
     class ListCommand : ICommand
     {
-        private readonly Picture picture;
+        private readonly CompoundShape core;
 
         public string Name => "list";
         public string Help => "Вывести список фигур на картинке";
         public string Description => "";
         public string[] Synonyms => new string[] { };
 
-        public ListCommand(Picture picture)
+        public ListCommand(CompoundShape core)
         {
-            this.picture = picture;
+            this.core = core;
         }
 
         public void Execute(params string[] parameters)
         {
-            var data = picture.GetStringRepresentation(null);
-            if (data.Length != 0)
-            {
-                data += '\n';
-            }
-            Console.Write(data);
+            Console.Write(core);
         }
     }
 }

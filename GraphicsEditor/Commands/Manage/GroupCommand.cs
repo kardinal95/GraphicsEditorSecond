@@ -1,35 +1,33 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Manage
 {
     class GroupCommand : BaseManageCommand
     {
-        private readonly Picture picture;
-
         public override string Name => "group";
         public override string Help => "Группирует фигуры";
 
-        public override string Description => "Группирует фигуры с указанными индексами\n" +
-                                              "Использование: \'group x y ..\', где x, y, .. - индексы фигур в команде list";
+        public override string Description =>
+            "Группирует фигуры с указанными индексами\n" +
+            "Использование: \'group x y ..\', где x, y, .. - индексы фигур в команде list";
 
         public override string[] Synonyms => new string[] { };
-        protected override int Argsnum => 0;
+        protected override int MinArg => 2;
+        protected override int MaxArg => -1;
 
-        public GroupCommand(Picture picture) : base(picture)
-        {
-            this.picture = picture;
-        }
+        public GroupCommand(CompoundShape core) : base(core) { }
 
-        protected override void MakeChanges(List<CompoundIndex> indexes)
+        protected override void MakeChanges(List<IShape> shapes)
         {
-            var shapes = indexes.Select(index => picture.GetShapeAt(index)).ToList();
-            foreach (var index in indexes)
+            var compound = new CompoundShape(shapes, Core);
+            foreach (var shape in shapes)
             {
-                picture.RemoveAt(index);
+                shape.Parent.Remove(shape);
+                shape.Parent = compound;
             }
-            picture.Add(new CompoundShape(shapes));
+            Core.Add(compound);
         }
     }
 }

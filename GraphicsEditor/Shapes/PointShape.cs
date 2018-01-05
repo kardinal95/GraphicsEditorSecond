@@ -6,16 +6,20 @@ namespace GraphicsEditor.Shapes
 {
     class PointShape : IShape
     {
+        public CompoundShape Parent { get; set; }
+        public CompoundIndex FullIndex => GetFullIndex();
+
         private PointF Coordinates { get; }
 
-        public PointShape(float x, float y)
+        public PointShape(float x, float y, CompoundShape parent)
         {
             Coordinates = new PointF(x, y);
+            Parent = parent;
         }
 
         public void Draw(IDrawer drawer)
         {
-            drawer.SelectPen(Color.Black, 1);
+            drawer.SelectPen(Color.Black);
             drawer.DrawPoint(Coordinates);
         }
 
@@ -24,19 +28,30 @@ namespace GraphicsEditor.Shapes
             throw new NotImplementedException();
         }
 
-        public void RemoveAt(CompoundIndex index)
-        {
-            throw new InvalidOperationException("Non-compound shape do not contain sub elements!");
-        }
-
         public IShape GetShapeAt(CompoundIndex index)
         {
-            throw new InvalidOperationException("Non-compound shape do not contain sub elements!");
+            if (index.Size != 0)
+            {
+                throw new InvalidOperationException(
+                    "Non-compound shape do not contain sub elements!");
+            }
+
+            return this;
         }
 
-        public string GetStringRepresentation(string compoundIndex)
+        public override string ToString()
         {
-            return $"[{compoundIndex}] Точка({Coordinates.X}, {Coordinates.Y})";
+            return $"[{FullIndex}] Точка({Coordinates.X}, {Coordinates.Y})\n";
+        }
+
+        private CompoundIndex GetFullIndex()
+        {
+            if (Parent == null)
+            {
+                throw new Exception("Critical: shapes not in accessible field!");
+            }
+
+            return Parent.FullIndex.JoinRight(Parent.GetPos(this));
         }
     }
 }
