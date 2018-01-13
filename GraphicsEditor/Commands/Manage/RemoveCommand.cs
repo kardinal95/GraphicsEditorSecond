@@ -13,8 +13,7 @@ namespace GraphicsEditor.Commands.Manage
             "Использование: \'remove x y ..\', где x, y, .. - индексы фигур в команде list";
 
         public override string[] Synonyms => new[] {"rm"};
-        protected override int MinArg => 1;
-        protected override int MaxArg => -1;
+        protected override int[] ArgRange => new[] {1, -1};
 
         protected override void MakeChanges(List<IShape> shapes)
         {

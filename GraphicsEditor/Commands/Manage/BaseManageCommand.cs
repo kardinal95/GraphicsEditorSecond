@@ -16,29 +16,39 @@ namespace GraphicsEditor.Commands.Manage
         public abstract string Help { get; }
         public abstract string Description { get; }
         public abstract string[] Synonyms { get; }
-        protected abstract int MinArg { get; } // Количество аргументов для команды
-        protected abstract int MaxArg { get; } // Для снятия ограничения назначить -1
+
+        protected abstract int[] ArgRange { get; } // Минимум и максимум аргументов (-1 неогр.)
+
         protected readonly CompoundShape Core;
 
         public void Execute(params string[] parameters)
         {
-            if (MaxArg > 0 && MaxArg < parameters.Length || MinArg > 0 && MinArg > parameters.Length)
+            if (ArgRange[0] > 0 && ArgRange[0] > parameters.Length ||
+                ArgRange[1] > 0 && ArgRange[1] < parameters.Length)
             {
                 Console.WriteLine($"Ошибка - было получено {parameters.Length} аргументов!");
-                if (MinArg > 0) Console.WriteLine($"Минимум аргументов - {MinArg}.");
-                if (MaxArg > 0) Console.WriteLine($"Максимум аргументов - {MinArg}.");
+                if (ArgRange[0] > 0)
+                {
+                    Console.WriteLine($"Минимум аргументов - {ArgRange[0]}.");
+                }
+
+                if (ArgRange[1] > 0)
+                {
+                    Console.WriteLine($"Максимум аргументов - {ArgRange[1]}.");
+                }
+
                 Console.WriteLine($"Для получения справки введите \'explain {Name}\'");
                 return;
             }
 
-            var parsed = CommandLib.ParseIndexes(parameters, out var errors);
+            var indexes = CommandLib.ParseIndexes(parameters, out var errors);
             if (errors.Count != 0)
             {
                 Console.WriteLine($"Обнаружены ошибки ввода: {string.Join(", ", errors)}");
                 return;
             }
 
-            var shapes = CommandLib.GetExisting(parsed, out var missing, Core);
+            var shapes = CommandLib.GetExisting(indexes, out var missing, Core);
             if (missing.Count != 0)
             {
                 Console.WriteLine($"Не найдены элементы с индексами: {string.Join(", ", missing)}");
@@ -52,6 +62,6 @@ namespace GraphicsEditor.Commands.Manage
             MakeChanges(shapes);
         }
 
-        protected abstract void MakeChanges(List<IShape> indexes);
+        protected abstract void MakeChanges(List<IShape> shapes);
     }
 }

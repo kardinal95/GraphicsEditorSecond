@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Manage
@@ -14,8 +13,7 @@ namespace GraphicsEditor.Commands.Manage
             "Использование: \'group x y ..\', где x, y, .. - индексы фигур в команде list";
 
         public override string[] Synonyms => new string[] { };
-        protected override int MinArg => 2;
-        protected override int MaxArg => -1;
+        protected override int[] ArgRange => new[] {1, -1};
 
         public GroupCommand(CompoundShape core) : base(core) { }
 
@@ -27,6 +25,7 @@ namespace GraphicsEditor.Commands.Manage
                 shape.Parent.Remove(shape);
                 shape.Parent = compound;
             }
+
             Core.Add(compound);
         }
     }

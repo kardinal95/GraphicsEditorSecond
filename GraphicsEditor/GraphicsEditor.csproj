@@ -44,14 +44,25 @@
   <ItemGroup>
     <Compile Include="Commands\CommandLib.cs" />
     <Compile Include="Commands\Manage\BaseManageCommand.cs" />
+    <Compile Include="Commands\Manage\Transform\BaseTransformCommand.cs" />
+    <Compile Include="Commands\Manage\Transform\ScaleCommand.cs" />
+    <Compile Include="Commands\Manage\Transform\TranslateCommand.cs" />
+    <Compile Include="Commands\Manage\Transform\RotateCommand.cs" />
     <Compile Include="Commands\Manage\UngroupCommand.cs" />
-    <Compile Include="Commands\Manage\ListCommand.cs" />
+    <Compile Include="Commands\ListCommand.cs" />
     <Compile Include="Commands\Manage\GroupCommand.cs" />
     <Compile Include="Commands\Manage\RemoveCommand.cs" />
     <Compile Include="Commands\Shape\BaseShapeCommand.cs" />
+    <Compile Include="Commands\Shape\EllipseCommand.cs" />
+    <Compile Include="Commands\Shape\CircleCommand.cs" />
+    <Compile Include="Commands\Shape\LineCommand.cs" />
     <Compile Include="Commands\Shape\PointCommand.cs" />
     <Compile Include="CompoundIndex.cs" />
+    <Compile Include="Shapes\BasicShape.cs" />
+    <Compile Include="Shapes\EllipseShape.cs" />
     <Compile Include="Shapes\CompoundShape.cs" />
+    <Compile Include="Shapes\CircleShape.cs" />
+    <Compile Include="Shapes\LineShape.cs" />
     <Compile Include="Shapes\PointShape.cs" />
     <Compile Include="Transformation.cs" />
     <Compile Include="Program.cs" />

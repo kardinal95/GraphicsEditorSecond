@@ -8,13 +8,13 @@ namespace GraphicsEditor.Shapes
     public class CompoundShape : IShape
     {
         public CompoundShape Parent { get; set; }
-        public CompoundIndex FullIndex => GetFullIndex();
+        public CompoundIndex Index => GetFullIndex();
+
         private readonly IList<IShape> shapes;
         public event Action Changed;
 
         private readonly object lockObject = new object();
 
-        // Constructors
         public CompoundShape()
         {
             Parent = null;
@@ -27,14 +27,12 @@ namespace GraphicsEditor.Shapes
             Parent = parent;
         }
 
-        // Compound shape exclusive
-
         public void Add(IShape shape)
         {
             lock (lockObject)
             {
                 shapes.Add(shape);
-                Changed?.Invoke();
+                Refresh();
             }
         }
 
@@ -43,7 +41,7 @@ namespace GraphicsEditor.Shapes
             lock (lockObject)
             {
                 shapes.Insert(position, shape);
-                Changed?.Invoke();
+                Refresh();
             }
         }
 
@@ -60,7 +58,7 @@ namespace GraphicsEditor.Shapes
                     Parent.Remove(this);
                 }
 
-                Changed?.Invoke();
+                Refresh();
             }
         }
 
@@ -95,7 +93,6 @@ namespace GraphicsEditor.Shapes
             return result;
         }
 
-        // IShape
         public void Draw(IDrawer drawer)
         {
             lock (lockObject)
@@ -112,37 +109,56 @@ namespace GraphicsEditor.Shapes
             IShape result;
             lock (lockObject)
             {
-                result = index.Size == 0 ? this : shapes[index.Top].GetShapeAt(index.Sub);
+                result = index.Count == 0 ? this : shapes[index.Head].GetShapeAt(index.Tail);
             }
 
             return result;
+        }
+
+        public string ToIndexedString()
+        {
+            var result = new List<string>();
+            if (Parent != null)
+            {
+                result.Add(string.Join(" ", Index, this));
+            }
+
+            ;
+
+            lock (lockObject)
+            {
+                result.AddRange(shapes.Select(shape => shape.ToIndexedString()));
+            }
+
+            return string.Join("\n", result);
         }
 
         private CompoundIndex GetFullIndex()
         {
-            return Parent == null ? new CompoundIndex()
-                : Parent.FullIndex.JoinRight(Parent.GetPos(this));
+            return Parent == null ? new CompoundIndex() : Parent.Index.Append(Parent.GetPos(this));
         }
 
         public void Transform(Transformation trans)
         {
-            throw new NotImplementedException();
+            lock (lockObject)
+            {
+                foreach (var shape in shapes)
+                {
+                    shape.Transform(trans);
+                }
+
+                Refresh();
+            }
         }
 
         public override string ToString()
         {
-            var result = "";
-            if (Parent != null)
-            {
-                result += $"[{FullIndex}] Составная фигура\n";
-            }
+            return "Составная фигура";
+        }
 
-            lock (lockObject)
-            {
-                result = shapes.Aggregate(result, (current, shape) => current + shape.ToString());
-            }
-
-            return result;
+        public void Refresh()
+        {
+            Changed?.Invoke();
         }
     }
 }

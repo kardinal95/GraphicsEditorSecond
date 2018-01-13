@@ -2,7 +2,7 @@
 using ConsoleUI;
 using GraphicsEditor.Shapes;
 
-namespace GraphicsEditor.Commands.Manage
+namespace GraphicsEditor.Commands
 {
     class ListCommand : ICommand
     {
@@ -20,7 +20,11 @@ namespace GraphicsEditor.Commands.Manage
 
         public void Execute(params string[] parameters)
         {
-            Console.Write(core);
+            var fullString = core.ToIndexedString();
+            if (fullString != string.Empty)
+            {
+                Console.WriteLine(core.ToIndexedString());
+            }
         }
     }
 }

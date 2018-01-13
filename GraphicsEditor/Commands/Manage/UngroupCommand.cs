@@ -14,8 +14,7 @@ namespace GraphicsEditor.Commands.Manage
             "Использование: \'ungroup x\', где x - индекс фигуры в команде list";
 
         public override string[] Synonyms => new string[] { };
-        protected override int MinArg => 1;
-        protected override int MaxArg => 1;
+        protected override int[] ArgRange => new[] {1, 1};
 
         public UngroupCommand(CompoundShape core) : base(core) { }
 
@@ -23,7 +22,7 @@ namespace GraphicsEditor.Commands.Manage
         {
             if (shapes[0].GetType() != typeof(CompoundShape))
             {
-                Console.WriteLine("Cannot ungroup base figure");
+                Console.WriteLine("Cannot ungroup basic figure!");
                 return;
             }
 

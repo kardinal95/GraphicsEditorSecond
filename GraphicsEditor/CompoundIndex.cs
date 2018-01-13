@@ -4,101 +4,97 @@ using System.Linq;
 
 namespace GraphicsEditor
 {
-    public class CompoundIndex : IComparable
+    /// <summary>
+    ///     Класс для хранения составных индексов
+    /// </summary>
+    public class CompoundIndex
     {
-        public int Size => subIndexes.Count;
-        public int Top => Size != 0 ? subIndexes[0] : -1;
-        public CompoundIndex Sub => GetSub();
+        /// <summary>
+        ///     Количество уровней в составном индексе
+        /// </summary>
+        public int Count => indexes.Count;
 
-        private readonly List<int> subIndexes;
+        /// <summary>
+        ///     Верхний уровень составного индекса
+        /// </summary>
+        public int Head
+        {
+            get
+            {
+                if (Count != 0)
+                {
+                    return indexes[0];
+                }
+
+                return -1;
+            }
+        }
+
+        /// <summary>
+        ///     Составной индекс без первого элемента
+        /// </summary>
+        public CompoundIndex Tail
+        {
+            get
+            {
+                var sub = new CompoundIndex(indexes);
+                sub.indexes.RemoveAt(0);
+                return sub;
+            }
+        }
+
+        private readonly List<int> indexes;
 
         public CompoundIndex()
         {
-            subIndexes = new List<int>();
+            indexes = new List<int>();
         }
 
-        private CompoundIndex(IEnumerable<int> indexList)
+        private CompoundIndex(IEnumerable<int> indexes)
         {
-            subIndexes = indexList.ToList();
+            this.indexes = indexes.ToList();
         }
 
-        public static bool TryParse(string input, out CompoundIndex index)
+        /// <summary>
+        ///     Преобразует входную строку в составной индекс
+        ///     Возвращает true при успехе, false при обнаружении ошибок
+        /// </summary>
+        /// <param name="input">Входная строка</param>
+        /// <param name="compound">Результат - составной индекс</param>
+        /// <returns>True/False - статус успеха конвертации</returns>
+        public static bool TryParse(string input, out CompoundIndex compound)
         {
-            index = null;
-            var indexList = new List<int>();
+            compound = null;
+            var indexes = new List<int>();
             var parts = input.Split(':');
             foreach (var part in parts)
             {
-                if (!int.TryParse(part, out var partInt))
+                if (!int.TryParse(part, out var index))
                 {
                     return false;
                 }
 
-                indexList.Add(partInt);
+                indexes.Add(index);
             }
 
-            index = new CompoundIndex(indexList);
+            compound = new CompoundIndex(indexes);
             return true;
         }
 
-        private CompoundIndex GetSub()
+        /// <summary>
+        ///     Добавляет индекс на последний уровень
+        /// </summary>
+        /// <param name="index">Индекс для добавления</param>
+        /// <returns></returns>
+        public CompoundIndex Append(int index)
         {
-            var sub = new CompoundIndex(subIndexes);
-            sub.subIndexes.RemoveAt(0);
-            return sub;
-        }
-
-        public CompoundIndex JoinRight(int index)
-        {
-            subIndexes.Add(index);
+            indexes.Add(index);
             return this;
-        }
-
-        public void JoinLeft(int index)
-        {
-            subIndexes.Insert(0, index);
         }
 
         public override string ToString()
         {
-            return string.Join(":", subIndexes);
-        }
-
-        public bool Equals(CompoundIndex other)
-        {
-            if (Size != other?.Size)
-            {
-                return false;
-            }
-
-            for (var i = Size; i < other.Size; i++)
-            {
-                if (subIndexes[i] != other.subIndexes[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        public int CompareTo(object obj)
-        {
-            switch (obj)
-            {
-                case null:
-                    return 1;
-                case CompoundIndex otherIndex:
-                    var comparison = Top.CompareTo(otherIndex.Top);
-                    if (comparison == 0 && Size != 1)
-                    {
-                        return Sub.CompareTo(otherIndex.Sub);
-                    }
-
-                    return comparison;
-                default:
-                    throw new ArgumentException("Object is not a Compound Index!");
-            }
+            return Count == 0 ? string.Empty : $"[{string.Join(":", indexes)}]";
         }
     }
 }

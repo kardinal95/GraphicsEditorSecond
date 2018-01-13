@@ -1,7 +1,9 @@
 ﻿using System;
 using ConsoleUI;
 using DrawablesUI;
+using GraphicsEditor.Commands;
 using GraphicsEditor.Commands.Manage;
+using GraphicsEditor.Commands.Manage.Transform;
 using GraphicsEditor.Commands.Shape;
 using GraphicsEditor.Shapes;
 
@@ -21,6 +23,14 @@ namespace GraphicsEditor
 
             // Shapes
             app.AddCommand(new PointCommand(core));
+            app.AddCommand(new LineCommand(core));
+            app.AddCommand(new CircleCommand(core));
+            app.AddCommand(new EllipseCommand(core));
+
+            // Transformation
+            app.AddCommand(new TranslateCommand(core));
+            app.AddCommand(new RotateCommand(core));
+            app.AddCommand(new ScaleCommand(core));
 
             // Other
             app.AddCommand(new ListCommand(core));

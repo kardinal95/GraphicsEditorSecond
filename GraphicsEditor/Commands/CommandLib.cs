@@ -58,7 +58,7 @@ namespace GraphicsEditor.Commands
         {
             foreach (var compoundIndex in source)
             {
-                if (compoundIndex.Size == 1 && index.Size == 1)
+                if (compoundIndex.Count == 1 && index.Count == 1)
                 {
                     continue;
                 }
@@ -77,7 +77,7 @@ namespace GraphicsEditor.Commands
         }
 
         public static List<IShape> GetExisting(IEnumerable<CompoundIndex> indexes,
-                                               out List<string> errors, IShape root)
+                                               out List<string> errors, IShape core)
         {
             errors = new List<string>();
             var result = new List<IShape>();
@@ -85,7 +85,7 @@ namespace GraphicsEditor.Commands
             {
                 try
                 {
-                    var shape = root.GetShapeAt(compoundIndex);
+                    var shape = core.GetShapeAt(compoundIndex);
                     result.Add(shape);
                 }
                 catch
