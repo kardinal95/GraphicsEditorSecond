@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands
@@ -56,24 +57,7 @@ namespace GraphicsEditor.Commands
 
         private static bool Collides(IEnumerable<CompoundIndex> source, CompoundIndex index)
         {
-            foreach (var compoundIndex in source)
-            {
-                if (compoundIndex.Count == 1 && index.Count == 1)
-                {
-                    continue;
-                }
-                if (compoundIndex.ToString().StartsWith(index.ToString()))
-                {
-                    return true;
-                }
-
-                if (index.ToString().StartsWith(compoundIndex.ToString()))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return source.Any(compoundIndex => compoundIndex.Head == index.Head);
         }
 
         public static List<IShape> GetExisting(IEnumerable<CompoundIndex> indexes,

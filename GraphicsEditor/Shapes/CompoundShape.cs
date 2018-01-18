@@ -123,8 +123,6 @@ namespace GraphicsEditor.Shapes
                 result.Add(string.Join(" ", Index, this));
             }
 
-            ;
-
             lock (lockObject)
             {
                 result.AddRange(shapes.Select(shape => shape.ToIndexedString()));
