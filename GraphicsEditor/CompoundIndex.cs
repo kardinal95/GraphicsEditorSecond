@@ -80,6 +80,16 @@ namespace GraphicsEditor
             return true;
         }
 
+        public bool CollidesWith(CompoundIndex index)
+        {
+            if (Count == 0 || index.Count == 0)
+            {
+                return true;
+            }
+
+            return Head == index.Head && Tail.CollidesWith(index.Tail);
+        }
+
         /// <summary>
         ///     Добавляет индекс на последний уровень
         /// </summary>

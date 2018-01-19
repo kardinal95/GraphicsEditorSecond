@@ -37,7 +37,7 @@ namespace GraphicsEditor.Commands
             {
                 if (CompoundIndex.TryParse(argument, out var parsedIndex))
                 {
-                    if (Collides(result, parsedIndex))
+                    if (HaveCollisions(result, parsedIndex))
                     {
                         errors.Add(argument);
                     }
@@ -55,9 +55,9 @@ namespace GraphicsEditor.Commands
             return result;
         }
 
-        private static bool Collides(IEnumerable<CompoundIndex> source, CompoundIndex index)
+        private static bool HaveCollisions(IEnumerable<CompoundIndex> source, CompoundIndex index)
         {
-            return source.Any(compoundIndex => compoundIndex.Head == index.Head);
+            return source.Any(compoundIndex => compoundIndex.CollidesWith(index));
         }
 
         public static List<IShape> GetExisting(IEnumerable<CompoundIndex> indexes,
@@ -77,6 +77,7 @@ namespace GraphicsEditor.Commands
                     errors.Add(compoundIndex.ToString());
                 }
             }
+
             return result;
         }
     }
