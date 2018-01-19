@@ -2,13 +2,21 @@
 using System.Drawing;
 using GraphicsEditor.Shapes;
 
-namespace GraphicsEditor.Commands.Manage.Transform
+namespace GraphicsEditor.Commands.Transform
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Команда для изменения размера фигуры на указанный коэффициент
+    /// </summary>
     class ScaleCommand : BaseTransformCommand
     {
         public override string Name => "scale";
-        public override string Help => "";
-        public override string Description => "";
+        public override string Help => "Изменить размер фигуры";
+
+        public override string Description =>
+            "Изменяет размер фигуры на указанный коэффициент\n" +
+            "Параметры: координаты точки скалирования, коэфф. скалирования, индекс фигуры";
+
         public override string[] Synonyms => new string[] { };
         protected override int ArgumentsCount => 3;
 

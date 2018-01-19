@@ -3,14 +3,17 @@ using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Manage
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Команда для удаления фигур
+    /// </summary>
     class RemoveCommand : BaseManageCommand
     {
         public override string Name => "remove";
-        public override string Help => "Удалить фигуры с картинки";
+        public override string Help => "Удалить фигуры";
 
         public override string Description =>
-            "Удаляет фигуры с указанными индексами\n" +
-            "Использование: \'remove x y ..\', где x, y, .. - индексы фигур в команде list";
+            "Удаляет фигуры с указанными индексами\n" + "Параметры: индексы фигур";
 
         public override string[] Synonyms => new[] {"rm"};
         protected override int[] ArgRange => new[] {1, -1};
@@ -23,6 +26,6 @@ namespace GraphicsEditor.Commands.Manage
             }
         }
 
-        public RemoveCommand(CompoundShape core) : base(core) { }
+        public RemoveCommand(CompoundShape root) : base(root) { }
     }
 }

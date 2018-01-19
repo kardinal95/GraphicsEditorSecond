@@ -3,30 +3,33 @@ using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Manage
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Команда для группировки фигур
+    /// </summary>
     class GroupCommand : BaseManageCommand
     {
         public override string Name => "group";
-        public override string Help => "Группирует фигуры";
+        public override string Help => "Сгруппировать фигуры";
 
         public override string Description =>
-            "Группирует фигуры с указанными индексами\n" +
-            "Использование: \'group x y ..\', где x, y, .. - индексы фигур в команде list";
+            "Группирует фигуры с указанными индексами\n" + "Параметры: список индексов фигур";
 
         public override string[] Synonyms => new string[] { };
-        protected override int[] ArgRange => new[] {1, -1};
+        protected override int[] ArgRange => new[] {2, -1};
 
-        public GroupCommand(CompoundShape core) : base(core) { }
+        public GroupCommand(CompoundShape root) : base(root) { }
 
         protected override void MakeChanges(List<IShape> shapes)
         {
-            var compound = new CompoundShape(shapes, Core);
+            var compound = new CompoundShape(shapes, Root);
             foreach (var shape in shapes)
             {
                 shape.Parent.Remove(shape);
                 shape.Parent = compound;
             }
 
-            Core.Add(compound);
+            Root.Add(compound);
         }
     }
 }

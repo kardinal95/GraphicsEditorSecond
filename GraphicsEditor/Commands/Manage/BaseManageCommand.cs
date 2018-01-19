@@ -5,21 +5,30 @@ using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Manage
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Базовый класс для команд, управляющих фигурами
+    /// </summary>
     abstract class BaseManageCommand : ICommand
     {
-        protected BaseManageCommand(CompoundShape core)
+        protected BaseManageCommand(CompoundShape root)
         {
-            Core = core;
+            Root = root;
         }
 
+        /// Поля интерфейса
+        /// <see cref="IShape" />
         public abstract string Name { get; }
+
         public abstract string Help { get; }
         public abstract string Description { get; }
         public abstract string[] Synonyms { get; }
 
-        protected abstract int[] ArgRange { get; } // Минимум и максимум аргументов (-1 неогр.)
+        /// Количество аргументов (минимум и максимум, -1 - неограниченно)
+        protected abstract int[] ArgRange { get; }
 
-        protected readonly CompoundShape Core;
+        /// Корневая фигура
+        protected readonly CompoundShape Root;
 
         public void Execute(params string[] parameters)
         {
@@ -48,10 +57,11 @@ namespace GraphicsEditor.Commands.Manage
                 return;
             }
 
-            var shapes = CommandLib.GetExisting(indexes, out var missing, Core);
+            var shapes = CommandLib.GetExisting(indexes, out var missing, Root);
             if (missing.Count != 0)
             {
                 Console.WriteLine($"Не найдены элементы с индексами: {string.Join(", ", missing)}");
+                return;
             }
 
             if (shapes.Count == 0)
@@ -62,6 +72,7 @@ namespace GraphicsEditor.Commands.Manage
             MakeChanges(shapes);
         }
 
+        /// Сами преобразования в наследуемых классах
         protected abstract void MakeChanges(List<IShape> shapes);
     }
 }

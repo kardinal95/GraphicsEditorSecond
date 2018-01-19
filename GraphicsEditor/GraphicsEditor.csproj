@@ -44,10 +44,10 @@
   <ItemGroup>
     <Compile Include="Commands\CommandLib.cs" />
     <Compile Include="Commands\Manage\BaseManageCommand.cs" />
-    <Compile Include="Commands\Manage\Transform\BaseTransformCommand.cs" />
-    <Compile Include="Commands\Manage\Transform\ScaleCommand.cs" />
-    <Compile Include="Commands\Manage\Transform\TranslateCommand.cs" />
-    <Compile Include="Commands\Manage\Transform\RotateCommand.cs" />
+    <Compile Include="Commands\Transform\BaseTransformCommand.cs" />
+    <Compile Include="Commands\Transform\ScaleCommand.cs" />
+    <Compile Include="Commands\Transform\TranslateCommand.cs" />
+    <Compile Include="Commands\Transform\RotateCommand.cs" />
     <Compile Include="Commands\Manage\UngroupCommand.cs" />
     <Compile Include="Commands\ListCommand.cs" />
     <Compile Include="Commands\Manage\GroupCommand.cs" />

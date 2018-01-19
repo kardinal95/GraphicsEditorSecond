@@ -2,13 +2,21 @@
 using System.Drawing;
 using GraphicsEditor.Shapes;
 
-namespace GraphicsEditor.Commands.Manage.Transform
+namespace GraphicsEditor.Commands.Transform
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Команда для поворота фигуры вокруг указанной точки
+    /// </summary>
     class RotateCommand : BaseTransformCommand
     {
         public override string Name => "rotate";
-        public override string Help => "";
-        public override string Description => "";
+        public override string Help => "Повернуть фигуру вокруг указанной точки";
+
+        public override string Description =>
+            "Поворачивает фигуру вокруг указанной точки\n" +
+            "Параметры: координаты точки, угол, индекс фигуры";
+
         public override string[] Synonyms => new string[] { };
         protected override int ArgumentsCount => 3;
 

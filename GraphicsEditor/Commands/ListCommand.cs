@@ -4,26 +4,30 @@ using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Комманда вывода списка существующих фигур
+    /// </summary>
     class ListCommand : ICommand
     {
-        private readonly CompoundShape core;
+        private readonly CompoundShape root;
 
         public string Name => "list";
         public string Help => "Вывести список фигур на картинке";
-        public string Description => "";
+        public string Description => "Выводит список всех фигур с их индексами";
         public string[] Synonyms => new string[] { };
 
-        public ListCommand(CompoundShape core)
+        public ListCommand(CompoundShape root)
         {
-            this.core = core;
+            this.root = root;
         }
 
         public void Execute(params string[] parameters)
         {
-            var fullString = core.ToIndexedString();
+            var fullString = root.ToIndexedString();
             if (fullString != string.Empty)
             {
-                Console.WriteLine(core.ToIndexedString());
+                Console.WriteLine(root.ToIndexedString());
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 namespace GraphicsEditor
 {
     /// <summary>
-    ///     Класс для хранения составных индексов
+    ///     Класс составных индексов
     /// </summary>
     public class CompoundIndex
     {
@@ -58,9 +58,6 @@ namespace GraphicsEditor
         ///     Преобразует входную строку в составной индекс
         ///     Возвращает true при успехе, false при обнаружении ошибок
         /// </summary>
-        /// <param name="input">Входная строка</param>
-        /// <param name="compound">Результат - составной индекс</param>
-        /// <returns>True/False - статус успеха конвертации</returns>
         public static bool TryParse(string input, out CompoundIndex compound)
         {
             compound = null;
@@ -80,6 +77,11 @@ namespace GraphicsEditor
             return true;
         }
 
+        /// <summary>
+        /// Проверяет коллизии между двумя составными индексами
+        /// Коллизией считаются индексы, один из которых является частью другого
+        /// В т.ч. одинаковые составные индексы
+        /// </summary>
         public bool CollidesWith(CompoundIndex index)
         {
             if (Count == 0 || index.Count == 0)

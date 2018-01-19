@@ -4,16 +4,27 @@ using System.Linq;
 using ConsoleUI;
 using GraphicsEditor.Shapes;
 
-namespace GraphicsEditor.Commands.Manage.Transform
+namespace GraphicsEditor.Commands.Transform
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Базовый класс для команд, оперирующих трансформациями
+    /// </summary>
     public abstract class BaseTransformCommand : ICommand
     {
+        /// Поля интерфейса
+        /// <see cref="IShape" />
         public abstract string Name { get; }
+
         public abstract string Help { get; }
         public abstract string Description { get; }
         public abstract string[] Synonyms { get; }
 
+        /// Корневая фигура
         protected readonly CompoundShape Root;
+
+        /// Количество аргументов
+        /// Все команды принимают ArgumentsCount аргументов и индекс фигуры
         protected abstract int ArgumentsCount { get; }
 
         protected BaseTransformCommand(CompoundShape root)
@@ -26,13 +37,14 @@ namespace GraphicsEditor.Commands.Manage.Transform
             if (parameters.Length != ArgumentsCount + 1)
             {
                 Console.WriteLine("Некорректное количество аргументов!");
-                Console.WriteLine($"Ожидалось {ArgumentsCount} аргументов и идентификатор фигуры!");
+                Console.WriteLine($"Ожидалось {ArgumentsCount} аргументов преобразования " +
+                                  "и идентификатор фигуры!");
                 return;
             }
 
             var arguments = parameters.ToList().GetRange(0, ArgumentsCount);
             var parsed = CommandLib.ParseArguments<float>(arguments, out var errors);
-            if (!CompoundIndex.TryParse(parameters[parameters.Length-1], out var index))
+            if (!CompoundIndex.TryParse(parameters[parameters.Length - 1], out var index))
             {
                 errors.Add(parameters[parameters.Length]);
             }
@@ -54,6 +66,7 @@ namespace GraphicsEditor.Commands.Manage.Transform
             }
         }
 
+        /// Сами преобразования в наследуемых классах
         protected abstract void Process(List<float> arguments, IShape shape);
     }
 }

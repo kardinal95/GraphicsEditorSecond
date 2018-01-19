@@ -4,25 +4,28 @@ using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Manage
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Команда для разгруппировки фигур
+    /// </summary>
     class UngroupCommand : BaseManageCommand
     {
         public override string Name => "ungroup";
-        public override string Help => "Разгруппирует фигуру";
+        public override string Help => "Разгруппировать фигуру";
 
         public override string Description =>
-            "Разгруппирует фигуру с указанным индексом\n" +
-            "Использование: \'ungroup x\', где x - индекс фигуры в команде list";
+            "Разгруппирует фигуру с указанным индексом\n" + "Параметры: индекс составной фигуры";
 
         public override string[] Synonyms => new string[] { };
         protected override int[] ArgRange => new[] {1, 1};
 
-        public UngroupCommand(CompoundShape core) : base(core) { }
+        public UngroupCommand(CompoundShape root) : base(root) { }
 
         protected override void MakeChanges(List<IShape> shapes)
         {
             if (shapes[0].GetType() != typeof(CompoundShape))
             {
-                Console.WriteLine("Cannot ungroup basic figure!");
+                Console.WriteLine("Команда выполнима только для составных фигур!");
                 return;
             }
 

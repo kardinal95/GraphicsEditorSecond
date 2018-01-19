@@ -1,9 +1,11 @@
 ﻿using System;
-using System.Drawing;
 using DrawablesUI;
 
 namespace GraphicsEditor.Shapes
 {
+    /// <summary>
+    ///     Базовый класс простейших фигур
+    /// </summary>
     public abstract class BasicShape : IShape
     {
         public abstract void Draw(IDrawer drawer);

@@ -3,8 +3,8 @@ using ConsoleUI;
 using DrawablesUI;
 using GraphicsEditor.Commands;
 using GraphicsEditor.Commands.Manage;
-using GraphicsEditor.Commands.Manage.Transform;
 using GraphicsEditor.Commands.Shape;
+using GraphicsEditor.Commands.Transform;
 using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor
@@ -21,18 +21,18 @@ namespace GraphicsEditor
             app.AddCommand(new ExplainCommand(app));
             app.AddCommand(new HelpCommand(app));
 
-            // Shapes
+            // Фигуры
             app.AddCommand(new PointCommand(core));
             app.AddCommand(new LineCommand(core));
             app.AddCommand(new CircleCommand(core));
             app.AddCommand(new EllipseCommand(core));
 
-            // Transformation
+            // Трансформации
             app.AddCommand(new TranslateCommand(core));
             app.AddCommand(new RotateCommand(core));
             app.AddCommand(new ScaleCommand(core));
 
-            // Other
+            // Прочее
             app.AddCommand(new ListCommand(core));
             app.AddCommand(new RemoveCommand(core));
             app.AddCommand(new GroupCommand(core));

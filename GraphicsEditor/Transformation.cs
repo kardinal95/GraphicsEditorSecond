@@ -165,7 +165,9 @@ namespace GraphicsEditor
                         throw new NotImplementedException();
                     }
 
-                    var result = (float) (Math.Acos(Matrix[0, 0] / Scale[0]) / Math.PI * 180);
+                    // Поправка на знак для различия -45/45
+                    var result = (float) (Math.Acos(Matrix[0, 0] / Scale[0]) / Math.PI * 180) *
+                                 Math.Sign(Matrix[0, 1]);
 
                     if (!A.Equals(D))
                     {

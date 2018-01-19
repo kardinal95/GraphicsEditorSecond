@@ -4,15 +4,19 @@ using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Shape
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Команда для создания круга
+    /// </summary>
     class CircleCommand : BaseShapeCommand
     {
-        protected override int Argsnum => 3;
+        protected override int ArgsCount => 3;
 
         public override string Name => "circle";
         public override string Help => "Нарисовать круг";
 
-        public override string Description => "Рисует круг по координатам x, y с радиусом z.\n" +
-                                              "Использование: \'circle x y z\', где x, y, z - числа";
+        public override string Description =>
+            "Рисует круг с указанными параметрами\n" + "Параметры: координаты центра, радиус";
 
         public override string[] Synonyms => new[] {"cl"};
 
@@ -22,6 +26,6 @@ namespace GraphicsEditor.Commands.Shape
             return new CircleShape(center, parsed[2], core);
         }
 
-        public CircleCommand(CompoundShape core) : base(core) { }
+        public CircleCommand(CompoundShape root) : base(root) { }
     }
 }

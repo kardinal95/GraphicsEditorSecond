@@ -5,8 +5,16 @@ using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands
 {
+    /// <summary>
+    ///     Класс со вспомогательными методами для команд
+    /// </summary>
     static class CommandLib
     {
+        /// <summary>
+        ///     Преобразует входные строковые параметры в список параметров указанного типа
+        ///     В списке errors возвращаются все строковые параметры,
+        ///     для которых преобразование прошло неудачно
+        /// </summary>
         public static List<T> ParseArguments<T>(IEnumerable<string> args, out List<string> errors)
             where T : IConvertible
         {
@@ -28,6 +36,12 @@ namespace GraphicsEditor.Commands
             return result;
         }
 
+        /// <summary>
+        ///     Преобразует входные строковые параметры в список составных индексов
+        ///     В списке errors возвращаются все строковые параметры,
+        ///     для которых преобразование прошло неудачно
+        ///     В список ошибок также включаются индексы с коллизиями
+        /// </summary>
         public static IEnumerable<CompoundIndex> ParseIndexes(
             IEnumerable<string> arguments, out List<string> errors)
         {
@@ -55,11 +69,18 @@ namespace GraphicsEditor.Commands
             return result;
         }
 
+        /// <summary>
+        ///     Проверяет коллизии между указанным индексом и всеми индексами списка
+        /// </summary>
         private static bool HaveCollisions(IEnumerable<CompoundIndex> source, CompoundIndex index)
         {
             return source.Any(compoundIndex => compoundIndex.CollidesWith(index));
         }
 
+        /// <summary>
+        ///     Возвращает все существующие фигуры
+        ///     В списке errors возвращаются все индексы, для которых не существует фигуры
+        /// </summary>
         public static List<IShape> GetExisting(IEnumerable<CompoundIndex> indexes,
                                                out List<string> errors, IShape core)
         {

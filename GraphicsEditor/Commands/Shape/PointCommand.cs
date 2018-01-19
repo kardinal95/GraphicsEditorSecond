@@ -3,23 +3,27 @@ using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Shape
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Команда для создания линии
+    /// </summary>
     class PointCommand : BaseShapeCommand
     {
-        protected override int Argsnum => 2;
+        protected override int ArgsCount => 2;
 
         public override string Name => "point";
         public override string Help => "Нарисовать точку";
 
-        public override string Description => "Рисует точку по координатам x, y.\n" +
-                                              "Использование: \'point x y\', где x,y - числа типа float";
+        public override string Description =>
+            "Рисует точку c указанными параметрами\n" + "Параметры: координаты точки";
 
-        public override string[] Synonyms => new[] { "pt" };
+        public override string[] Synonyms => new[] {"pt"};
 
         protected override IShape CreateShape(List<float> parsed, CompoundShape core)
         {
             return new PointShape(parsed[0], parsed[1], core);
         }
 
-        public PointCommand(CompoundShape core) : base(core) { }
+        public PointCommand(CompoundShape root) : base(root) { }
     }
 }

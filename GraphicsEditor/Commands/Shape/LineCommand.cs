@@ -4,16 +4,20 @@ using GraphicsEditor.Shapes;
 
 namespace GraphicsEditor.Commands.Shape
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Команда для создания линии
+    /// </summary>
     class LineCommand : BaseShapeCommand
     {
-        protected override int Argsnum => 4;
+        protected override int ArgsCount => 4;
 
         public override string Name => "line";
         public override string Help => "Нарисовать линию";
 
         public override string Description =>
-            "Рисует линию по точкам с координатами (x1, y1), (x2, y2).\n" +
-            "Использование: \'line x1 y1 x2 y2\', где x1, y1, x2, y2 - числа";
+            "Рисует линию с указанными параметрами\n" +
+            "Параметры: координаты начала и конца отрезка";
 
         public override string[] Synonyms => new[] {"ln"};
 
@@ -24,6 +28,6 @@ namespace GraphicsEditor.Commands.Shape
             return new LineShape(pointStart, pointEnd, core);
         }
 
-        public LineCommand(CompoundShape core) : base(core) { }
+        public LineCommand(CompoundShape root) : base(root) { }
     }
 }
