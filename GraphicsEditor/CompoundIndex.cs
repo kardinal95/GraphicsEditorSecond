@@ -78,18 +78,16 @@ namespace GraphicsEditor
         }
 
         /// <summary>
-        /// Проверяет коллизии между двумя составными индексами
-        /// Коллизией считаются индексы, один из которых является частью другого
-        /// В т.ч. одинаковые составные индексы
+        ///     Проверяет коллизии между двумя составными индексами
+        ///     Коллизией считаются индексы, один из которых является частью другого
+        ///     В т.ч. одинаковые составные индексы
         /// </summary>
         public bool CollidesWith(CompoundIndex index)
         {
-            if (Count == 0 || index.Count == 0)
-            {
-                return true;
-            }
-
-            return Head == index.Head && Tail.CollidesWith(index.Tail);
+            var chars = new[] {'[', ']'};
+            var a = ToString().Trim(chars);
+            var b = index.ToString().Trim(chars);
+            return a.StartsWith(b) || b.StartsWith(a);
         }
 
         /// <summary>

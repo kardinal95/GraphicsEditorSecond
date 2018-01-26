@@ -134,19 +134,7 @@ namespace GraphicsEditor
 
             private double D => Matrix[0, 0] * Matrix[1, 1] - Matrix[0, 1] * Matrix[1, 0];
 
-            public float FirstAngle
-            {
-                get
-                {
-                    if (!A.Equals(Math.Abs(D)))
-                    {
-                        // Не обрабатываем разные коэффициенты
-                        throw new NotImplementedException();
-                    }
-
-                    return 0;
-                }
-            }
+            public float FirstAngle => 0;
 
             public float[] Scale =>
                 new[]
@@ -155,28 +143,9 @@ namespace GraphicsEditor
                     (float) (Math.Sqrt((A + D) / 2) - Math.Sqrt((A - D) / 2))
                 };
 
-            public float SecondAngle
-            {
-                get
-                {
-                    if (!A.Equals(Math.Abs(D)))
-                    {
-                        // Не обрабатываем разные коэффициенты
-                        throw new NotImplementedException();
-                    }
-
-                    // Поправка на знак для различия -45/45
-                    var result = (float) (Math.Acos(Matrix[0, 0] / Scale[0]) / Math.PI * 180) *
-                                 Math.Sign(Matrix[0, 1]);
-
-                    if (!A.Equals(D))
-                    {
-                        result *= -1;
-                    }
-
-                    return result;
-                }
-            }
+            public float SecondAngle =>
+                (float) (Math.Acos(Matrix[0, 0] / Scale[0]) / Math.PI * 180) *
+                Math.Sign(Matrix[0, 1]);
         }
     }
 }

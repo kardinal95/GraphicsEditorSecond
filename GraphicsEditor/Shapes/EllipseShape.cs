@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using DrawablesUI;
 
 namespace GraphicsEditor.Shapes
@@ -25,10 +26,15 @@ namespace GraphicsEditor.Shapes
 
         public override void Transform(Transformation trans)
         {
-            center.X = trans[center].X;
-            center.Y = trans[center].Y;
-            size.Width *= trans.Decomposition.Scale[0];
-            size.Height *= trans.Decomposition.Scale[1];
+            var scales = trans.Decomposition.Scale;
+            if (Math.Abs(scales[0] - scales[1]) > double.Epsilon)
+            {
+                throw new NotImplementedException();
+            }
+
+            center = trans[center];
+            size.Width *= scales[0];
+            size.Height *= scales[1];
             degree += trans.Decomposition.FirstAngle + trans.Decomposition.SecondAngle;
         }
 

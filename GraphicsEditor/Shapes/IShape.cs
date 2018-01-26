@@ -23,13 +23,6 @@ namespace GraphicsEditor.Shapes
         void Transform(Transformation trans);
 
         /// <summary>
-        ///     Возвращает содержащуюся в данной фигуру по указанному индексу
-        ///     При попытке получить вложенную фигуру для базовой -
-        ///     бросить InvalidArgumentException
-        /// </summary>
-        IShape GetShapeAt(CompoundIndex index);
-
-        /// <summary>
         ///     Строковое представление фигуры вместе с индексом
         ///     Составная должна возвращать описание себя и всех вложенных
         /// </summary>

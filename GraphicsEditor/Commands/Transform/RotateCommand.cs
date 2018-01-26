@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using GraphicsEditor.Shapes;
 
@@ -28,7 +29,16 @@ namespace GraphicsEditor.Commands.Transform
             var second = Transformation.Rotate(arguments[2]);
             var third = Transformation.Translate(new PointF(arguments[0], arguments[1]));
             var trans = first * second * third;
-            shape.Transform(trans);
+            try
+            {
+                shape.Transform(trans);
+            }
+            catch (NotImplementedException e)
+            {
+                Console.WriteLine(e.Message);
+                return;
+            }
+
             Root.Refresh();
         }
     }

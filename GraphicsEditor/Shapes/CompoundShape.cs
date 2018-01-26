@@ -106,13 +106,21 @@ namespace GraphicsEditor.Shapes
 
         public IShape GetShapeAt(CompoundIndex index)
         {
-            IShape result;
+            IShape shape;
             lock (lockObject)
             {
-                result = index.Count == 0 ? this : shapes[index.Head].GetShapeAt(index.Tail);
+                if (index.Count == 1)
+                {
+                    shape = shapes[index.Head];
+                }
+                else
+                {
+                    var complex = (CompoundShape) shapes[index.Head];
+                    shape = complex.GetShapeAt(index.Tail);
+                }
             }
 
-            return result;
+            return shape;
         }
 
         public string ToIndexedString()

@@ -82,7 +82,7 @@ namespace GraphicsEditor.Commands
         ///     В списке errors возвращаются все индексы, для которых не существует фигуры
         /// </summary>
         public static List<IShape> GetExisting(IEnumerable<CompoundIndex> indexes,
-                                               out List<string> errors, IShape core)
+                                               out List<string> errors, CompoundShape core)
         {
             errors = new List<string>();
             var result = new List<IShape>();
@@ -93,7 +93,7 @@ namespace GraphicsEditor.Commands
                     var shape = core.GetShapeAt(compoundIndex);
                     result.Add(shape);
                 }
-                catch
+                catch (Exception e) when (e is ArgumentOutOfRangeException || e is InvalidCastException)
                 {
                     errors.Add(compoundIndex.ToString());
                 }

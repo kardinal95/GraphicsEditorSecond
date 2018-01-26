@@ -19,16 +19,6 @@ namespace GraphicsEditor.Shapes
             Parent = parent;
         }
 
-        public IShape GetShapeAt(CompoundIndex index)
-        {
-            if (index.Count != 0)
-            {
-                throw new InvalidOperationException("No subelements in basic shape!");
-            }
-
-            return this;
-        }
-
         public string ToIndexedString()
         {
             return string.Join(" ", Index, this);

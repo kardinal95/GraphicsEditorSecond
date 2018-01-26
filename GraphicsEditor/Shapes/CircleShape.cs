@@ -23,8 +23,7 @@ namespace GraphicsEditor.Shapes
 
         public override void Transform(Transformation trans)
         {
-            center.X = trans[center].X;
-            center.Y = trans[center].Y;
+            center = trans[center];
             radius *= trans.Decomposition.Scale[0];
         }
 
