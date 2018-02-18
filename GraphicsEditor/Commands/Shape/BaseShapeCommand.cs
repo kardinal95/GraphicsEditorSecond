@@ -9,7 +9,7 @@ namespace GraphicsEditor.Commands.Shape
     /// <summary>
     ///     Базовый класс для команд, создающих фигуры (базовые)
     /// </summary>
-    abstract class BaseShapeCommand : ICommand
+    public abstract class BaseShapeCommand : ICommand
     {
         /// Поля интерфейса
         /// <see cref="IShape" />

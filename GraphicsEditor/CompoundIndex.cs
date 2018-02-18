@@ -36,6 +36,11 @@ namespace GraphicsEditor
         {
             get
             {
+                if (Count == 0)
+                {
+                    return null;
+                }
+
                 var sub = new CompoundIndex(indexes);
                 sub.indexes.RemoveAt(0);
                 return sub;
@@ -65,7 +70,7 @@ namespace GraphicsEditor
             var parts = input.Split(':');
             foreach (var part in parts)
             {
-                if (!int.TryParse(part, out var index))
+                if (!int.TryParse(part, out var index) || index < 0)
                 {
                     return false;
                 }

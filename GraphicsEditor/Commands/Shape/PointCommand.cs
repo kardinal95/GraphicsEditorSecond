@@ -7,7 +7,7 @@ namespace GraphicsEditor.Commands.Shape
     /// <summary>
     ///     Команда для создания линии
     /// </summary>
-    class PointCommand : BaseShapeCommand
+    public class PointCommand : BaseShapeCommand
     {
         protected override int ArgsCount => 2;
 

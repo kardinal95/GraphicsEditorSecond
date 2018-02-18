@@ -10,6 +10,17 @@ namespace GraphicsEditor.Shapes
         public CompoundShape Parent { get; set; }
         public CompoundIndex Index => GetFullIndex();
 
+        public IList<IShape> Shapes
+        {
+            get
+            {
+                lock (lockObject)
+                {
+                    return shapes;
+                }
+            }
+        }
+
         private readonly IList<IShape> shapes;
         public event Action Changed;
 
