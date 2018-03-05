@@ -28,7 +28,7 @@ namespace GraphicsEditor.Shapes
         {
             if (Parent is null)
             {
-                throw new Exception("Shape's not in accessible field!");
+                throw new InvalidOperationException("Shape's not in accessible field!");
             }
 
             return Parent.Index.Append(Parent.GetPos(this));

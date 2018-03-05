@@ -5,30 +5,30 @@ namespace GraphicsEditor.Shapes
 {
     class LineShape : BasicShape
     {
-        private readonly PointF[] bounds = new PointF[2];
+        public readonly PointF[] Bounds = new PointF[2];
 
         public LineShape(PointF start, PointF end, CompoundShape parent) : base(parent)
         {
-            bounds[0] = start;
-            bounds[1] = end;
+            Bounds[0] = start;
+            Bounds[1] = end;
         }
 
         public override void Draw(IDrawer drawer)
         {
             drawer.SelectPen(Color.Black);
-            drawer.DrawLine(bounds[0], bounds[1]);
+            drawer.DrawLine(Bounds[0], Bounds[1]);
         }
 
         public override void Transform(Transformation trans)
         {
-            bounds[0] = trans[bounds[0]];
-            bounds[1] = trans[bounds[1]];
+            Bounds[0] = trans[Bounds[0]];
+            Bounds[1] = trans[Bounds[1]];
         }
 
         public override string ToString()
         {
-            return $"Линия(Точка({bounds[0].X}, {bounds[0].Y}), " +
-                   $"Точка({bounds[1].X}, {bounds[1].Y}))";
+            return $"Линия(Точка({Bounds[0].X}, {Bounds[0].Y}), " +
+                   $"Точка({Bounds[1].X}, {Bounds[1].Y}))";
         }
     }
 }

@@ -6,22 +6,22 @@ namespace GraphicsEditor.Shapes
 {
     class EllipseShape : BasicShape
     {
-        private PointF center;
-        private SizeF size;
-        private float degree;
+        public PointF Center { get; private set; }
+        public SizeF Size { get; private set; }
+        public float Degree { get; private set; }
 
         public EllipseShape(PointF center, SizeF size, float degree, CompoundShape parent) :
             base(parent)
         {
-            this.center = center;
-            this.size = size;
-            this.degree = degree;
+            Center = center;
+            Size = size;
+            Degree = degree;
         }
 
         public override void Draw(IDrawer drawer)
         {
             drawer.SelectPen(Color.Black);
-            drawer.DrawEllipseArc(center, size, 0, 360, degree);
+            drawer.DrawEllipseArc(Center, Size, 0, 360, Degree);
         }
 
         public override void Transform(Transformation trans)
@@ -32,16 +32,16 @@ namespace GraphicsEditor.Shapes
                 throw new NotImplementedException();
             }
 
-            center = trans[center];
-            size.Width *= scales[0];
-            size.Height *= scales[1];
-            degree += trans.Decomposition.FirstAngle + trans.Decomposition.SecondAngle;
+            Center = trans[Center];
+            var sizeNew = new SizeF(Size.Width * scales[0], Size.Height * scales[1]);
+            Size = sizeNew;
+            Degree += trans.Decomposition.FirstAngle + trans.Decomposition.SecondAngle;
         }
 
         public override string ToString()
         {
-            return $"Эллипс(Центр({center.X}, {center.Y}), " +
-                   $"Размер = ({size.Height}, {size.Width}), Угол = {degree})";
+            return $"Эллипс(Центр({Center.X}, {Center.Y}), " +
+                   $"Размер = ({Size.Height}, {Size.Width}), Угол = {Degree})";
         }
     }
 }

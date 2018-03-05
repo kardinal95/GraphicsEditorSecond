@@ -25,8 +25,8 @@ namespace GraphicsEditorTests
             Assert.AreEqual(root.Shapes.Count, 1);
             var point = root.Shapes[0] as PointShape;
             Assert.IsNotNull(point);
-            Assert.AreEqual(point.CoordX, 100f);
-            Assert.AreEqual(point.CoordY, -100f);
+            Assert.AreEqual(point.Point.X, 100f);
+            Assert.AreEqual(point.Point.Y, -100f);
         }
     }
 }

@@ -15,8 +15,8 @@ namespace GraphicsEditor
             {
                 var modified = new PointF
                 {
-                    X = point.X * matrix[0, 0] + point.Y * matrix[1, 0] + matrix[2, 0],
-                    Y = point.X * matrix[0, 1] + point.Y * matrix[1, 1] + matrix[2, 1]
+                    X = point.X * Matrix[0, 0] + point.Y * Matrix[1, 0] + Matrix[2, 0],
+                    Y = point.X * Matrix[0, 1] + point.Y * Matrix[1, 1] + Matrix[2, 1]
                 };
                 return modified;
             }
@@ -30,11 +30,11 @@ namespace GraphicsEditor
         /// <summary>
         ///     Матрица преобразования (3x3)
         /// </summary>
-        private readonly float[,] matrix;
+        public readonly float[,] Matrix;
 
         private Transformation()
         {
-            matrix = new float[3, 3];
+            Matrix = new float[3, 3];
             Decomposition = new SingularValueDecomposition {Source = this};
         }
 
@@ -58,8 +58,8 @@ namespace GraphicsEditor
         public static Transformation Translate(PointF point)
         {
             var result = FromMatrix(new float[,] {{1, 0}, {0, 1}});
-            result.matrix[2, 0] = point.X;
-            result.matrix[2, 1] = point.Y;
+            result.Matrix[2, 0] = point.X;
+            result.Matrix[2, 1] = point.Y;
             return result;
         }
 
@@ -85,11 +85,11 @@ namespace GraphicsEditor
             {
                 for (var j = 0; j < 2; j++)
                 {
-                    result.matrix[i, j] = matrix[i, j];
+                    result.Matrix[i, j] = matrix[i, j];
                 }
             }
 
-            result.matrix[2, 2] = 1;
+            result.Matrix[2, 2] = 1;
             return result;
         }
 
@@ -105,9 +105,9 @@ namespace GraphicsEditor
                 for (var j = 0; j < 3; j++)
                 {
                     // Каждый элемент - произведение соотв. строк и столбцов
-                    result.matrix[i, j] = a.matrix[i, 0] * b.matrix[0, j] +
-                                          a.matrix[i, 1] * b.matrix[1, j] +
-                                          a.matrix[i, 2] * b.matrix[2, j];
+                    result.Matrix[i, j] = a.Matrix[i, 0] * b.Matrix[0, j] +
+                                          a.Matrix[i, 1] * b.Matrix[1, j] +
+                                          a.Matrix[i, 2] * b.Matrix[2, j];
                 }
             }
 
@@ -121,7 +121,7 @@ namespace GraphicsEditor
         public class SingularValueDecomposition
         {
             public Transformation Source;
-            private float[,] Matrix => Source.matrix;
+            private float[,] Matrix => Source.Matrix;
 
             private double A
             {

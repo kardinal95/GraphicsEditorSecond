@@ -15,14 +15,14 @@ namespace GraphicsEditorTests
         [TestCase("a", ExpectedResult = false)]
         public bool TryParseTest(string input)
         {
-            return CompoundIndex.TryParse(input, out var index);
+            return CompoundIndex.TryParse(input, out var _);
         }
 
         [TestCase("0")]
         [TestCase("1:3:1:3")]
         public void ToStringTest(string input)
         {
-            var success = CompoundIndex.TryParse(input, out var index);
+            CompoundIndex.TryParse(input, out var index);
             Assert.That(index.ToString(), Is.EqualTo($"[{input}]"));
         }
 
@@ -62,7 +62,7 @@ namespace GraphicsEditorTests
             var index = new CompoundIndex();
             index.Append(1);
             Assert.That(index.Count, Is.EqualTo(1));
-            Assert.That(index.Head.Equals(1));
+            Assert.That(index.Head, Is.EqualTo(1));
         }
     }
 }

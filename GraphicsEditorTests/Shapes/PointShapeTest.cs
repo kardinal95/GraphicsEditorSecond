@@ -1,5 +1,6 @@
 ﻿using GraphicsEditor.Shapes;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace GraphicsEditorTests.Shapes
 {
@@ -16,12 +17,23 @@ namespace GraphicsEditorTests.Shapes
         }
 
         [Test]
-        public void CreatePointCorrect()
+        public void CreatePointTest()
         {
-            point = new PointShape(20, -20, null);
-            Assert.AreEqual(point.CoordX, 20f);
-            Assert.AreEqual(point.CoordY, -20f);
-            Assert.AreEqual(point.Parent, null);
+            point = new PointShape(10, -10, root);
+            Assert.AreEqual(point.Point.X, 10f);
+            Assert.AreEqual(point.Point.Y, -10f);
+            Assert.AreEqual(point.Parent, root);
+        }
+
+        [Test]
+        public void IndexTest()
+        {
+            var pointA = new PointShape(0, 0, null);
+            var pointB = new PointShape(0, 0, root);
+            var pointC = new PointShape(0, 0, root);
+            Assert.That(pointA.Index, Throws.InvalidOperationException);
+            Assert.That(pointB.Index.ToString(), Is.EqualTo("0"));
+            Assert.That(pointC.Index.ToString(), Is.EqualTo("1"));
         }
     }
 }

@@ -5,31 +5,31 @@ namespace GraphicsEditor.Shapes
 {
     class CircleShape : BasicShape
     {
-        private PointF center;
-        private float radius;
+        public PointF Center { get; private set; }
+        public float Radius { get; private set; }
 
         public CircleShape(PointF center, float radius, CompoundShape parent) : base(parent)
         {
-            this.center = center;
-            this.radius = radius;
+            Center = center;
+            Radius = radius;
         }
 
         public override void Draw(IDrawer drawer)
         {
             drawer.SelectPen(Color.Black);
-            var size = new SizeF(2 * radius, 2 * radius);
-            drawer.DrawEllipseArc(center, size);
+            var size = new SizeF(2 * Radius, 2 * Radius);
+            drawer.DrawEllipseArc(Center, size);
         }
 
         public override void Transform(Transformation trans)
         {
-            center = trans[center];
-            radius *= trans.Decomposition.Scale[0];
+            Center = trans[Center];
+            Radius *= trans.Decomposition.Scale[0];
         }
 
         public override string ToString()
         {
-            return $"Круг(Центр({center.X}, {center.Y}), Радиус = {radius})";
+            return $"Круг(Центр({Center.X}, {Center.Y}), Радиус = {Radius})";
         }
     }
 }
