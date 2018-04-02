@@ -1,6 +1,7 @@
-﻿using GraphicsEditor.Shapes;
+﻿using System.Drawing;
+using GraphicsEditor;
+using GraphicsEditor.Shapes;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace GraphicsEditorTests.Shapes
 {
@@ -8,32 +9,28 @@ namespace GraphicsEditorTests.Shapes
     public class PointShapeTest
     {
         private PointShape point;
-        private CompoundShape root;
+
+        private PointF targetPoint = new PointF(10.5f, -10.5f);
 
         [SetUp]
         protected void SetUp()
         {
-            root = new CompoundShape();
+            point = new PointShape(targetPoint.X, targetPoint.Y, null);
         }
 
         [Test]
-        public void CreatePointTest()
+        public void Point_ShouldCreateCorrect()
         {
-            point = new PointShape(10, -10, root);
-            Assert.AreEqual(point.Point.X, 10f);
-            Assert.AreEqual(point.Point.Y, -10f);
-            Assert.AreEqual(point.Parent, root);
+            Assert.That(point.Point, Is.EqualTo(targetPoint));
         }
 
         [Test]
-        public void IndexTest()
+        public void Point_ShouldTransformCorrect()
         {
-            var pointA = new PointShape(0, 0, null);
-            var pointB = new PointShape(0, 0, root);
-            var pointC = new PointShape(0, 0, root);
-            Assert.That(pointA.Index, Throws.InvalidOperationException);
-            Assert.That(pointB.Index.ToString(), Is.EqualTo("0"));
-            Assert.That(pointC.Index.ToString(), Is.EqualTo("1"));
+            var mirror = new PointF(-10.5f, 10.5f);
+            var rotation = Transformation.Rotate(180);
+            point.Transform(rotation);
+            Assert.That(point.Point, Is.EqualTo(mirror));
         }
     }
 }

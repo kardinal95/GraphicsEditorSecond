@@ -4,7 +4,7 @@ using DrawablesUI;
 
 namespace GraphicsEditor.Shapes
 {
-    class EllipseShape : BasicShape
+    public class EllipseShape : BasicShape
     {
         public PointF Center { get; private set; }
         public SizeF Size { get; private set; }

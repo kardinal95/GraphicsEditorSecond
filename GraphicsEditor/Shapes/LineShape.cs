@@ -3,7 +3,7 @@ using DrawablesUI;
 
 namespace GraphicsEditor.Shapes
 {
-    class LineShape : BasicShape
+    public class LineShape : BasicShape
     {
         public readonly PointF[] Bounds = new PointF[2];
 

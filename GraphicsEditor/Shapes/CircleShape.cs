@@ -3,7 +3,7 @@ using DrawablesUI;
 
 namespace GraphicsEditor.Shapes
 {
-    class CircleShape : BasicShape
+    public class CircleShape : BasicShape
     {
         public PointF Center { get; private set; }
         public float Radius { get; private set; }

@@ -13,21 +13,21 @@ namespace GraphicsEditorTests
         [TestCase("-1:-2", ExpectedResult = false)]
         [TestCase(":", ExpectedResult = false)]
         [TestCase("a", ExpectedResult = false)]
-        public bool TryParseTest(string input)
+        public bool CompoundIndex_ShouldParseCorrect(string input)
         {
             return CompoundIndex.TryParse(input, out var _);
         }
 
         [TestCase("0")]
         [TestCase("1:3:1:3")]
-        public void ToStringTest(string input)
+        public void CompoundIndex_ShouldConvertToStringCorrect(string input)
         {
             CompoundIndex.TryParse(input, out var index);
             Assert.That(index.ToString(), Is.EqualTo($"[{input}]"));
         }
 
         [Test]
-        public void CollisionTest()
+        public void CompoundIndex_ShouldInformCheckCollisionCorrect()
         {
             CompoundIndex.TryParse("0:1:2", out var a);
             CompoundIndex.TryParse("0", out var b);
@@ -38,7 +38,7 @@ namespace GraphicsEditorTests
         }
 
         [Test]
-        public void AttributesTest()
+        public void CompoundIndex_ShouldReturnCorrectAttributes()
         {
             CompoundIndex.TryParse("0:1:2", out var index);
             Assert.That(index.Head, Is.EqualTo(0));
@@ -47,7 +47,7 @@ namespace GraphicsEditorTests
         }
 
         [Test]
-        public void EmptyIndexTest()
+        public void CompoundIndex_ShouldReturnOnNullCorrect()
         {
             var index = new CompoundIndex();
             Assert.That(index.Count, Is.EqualTo(0));
@@ -57,7 +57,7 @@ namespace GraphicsEditorTests
         }
 
         [Test]
-        public void ModificationsTest()
+        public void CompoundIndex_ShouldModifyCorrect()
         {
             var index = new CompoundIndex();
             index.Append(1);
