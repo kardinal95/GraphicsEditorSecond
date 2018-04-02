@@ -8,7 +8,7 @@ namespace GraphicsEditor.Commands.Shape
     /// <summary>
     ///     Команда для создания эллипса
     /// </summary>
-    class EllipseCommand : BaseShapeCommand
+    public class EllipseCommand : BaseShapeCommand
     {
         protected override int ArgsCount => 5;
 

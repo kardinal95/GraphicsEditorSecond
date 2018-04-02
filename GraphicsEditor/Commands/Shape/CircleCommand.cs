@@ -8,7 +8,7 @@ namespace GraphicsEditor.Commands.Shape
     /// <summary>
     ///     Команда для создания круга
     /// </summary>
-    class CircleCommand : BaseShapeCommand
+    public class CircleCommand : BaseShapeCommand
     {
         protected override int ArgsCount => 3;
 

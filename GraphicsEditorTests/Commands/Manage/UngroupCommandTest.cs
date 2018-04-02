@@ -6,7 +6,6 @@ using GraphicsEditor.Commands.Manage;
 using GraphicsEditor.Shapes;
 using GraphicsEditorTests.Shapes;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace GraphicsEditorTests.Commands.Manage
 {
@@ -49,6 +48,8 @@ namespace GraphicsEditorTests.Commands.Manage
                 var expected = $"Команда выполнима только для составных фигур!{Environment.NewLine}";
                 Assert.That(sw.ToString(), Is.EqualTo(expected));
             }
+
+            Console.SetOut(new StreamWriter(Console.OpenStandardOutput()));
         }
     }
 }
