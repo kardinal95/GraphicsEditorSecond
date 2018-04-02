@@ -53,6 +53,11 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Manage\BaseManageCommandTest.cs" />
+    <Compile Include="Commands\Manage\UngroupCommandTest.cs" />
+    <Compile Include="Commands\Manage\RemoveCommandTest.cs" />
+    <Compile Include="Commands\Manage\GroupCommandTest.cs" />
+    <Compile Include="Commands\Manage\DummyManageCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\BasicShapeTest.cs" />
     <Compile Include="Shapes\EllipseShapeTest.cs" />

@@ -7,7 +7,7 @@ namespace GraphicsEditor.Commands.Manage
     /// <summary>
     ///     Команда для группировки фигур
     /// </summary>
-    class GroupCommand : BaseManageCommand
+    public class GroupCommand : BaseManageCommand
     {
         public override string Name => "group";
         public override string Help => "Сгруппировать фигуры";

@@ -9,7 +9,7 @@ namespace GraphicsEditor.Commands.Manage
     /// <summary>
     ///     Базовый класс для команд, управляющих фигурами
     /// </summary>
-    abstract class BaseManageCommand : ICommand
+    public abstract class BaseManageCommand : ICommand
     {
         protected BaseManageCommand(CompoundShape root)
         {

@@ -8,7 +8,7 @@ namespace GraphicsEditor.Commands.Manage
     /// <summary>
     ///     Команда для разгруппировки фигур
     /// </summary>
-    class UngroupCommand : BaseManageCommand
+    public class UngroupCommand : BaseManageCommand
     {
         public override string Name => "ungroup";
         public override string Help => "Разгруппировать фигуру";

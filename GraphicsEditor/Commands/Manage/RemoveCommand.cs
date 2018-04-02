@@ -7,7 +7,7 @@ namespace GraphicsEditor.Commands.Manage
     /// <summary>
     ///     Команда для удаления фигур
     /// </summary>
-    class RemoveCommand : BaseManageCommand
+    public class RemoveCommand : BaseManageCommand
     {
         public override string Name => "remove";
         public override string Help => "Удалить фигуры";
