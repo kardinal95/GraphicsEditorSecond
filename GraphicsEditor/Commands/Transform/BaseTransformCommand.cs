@@ -46,7 +46,7 @@ namespace GraphicsEditor.Commands.Transform
             var parsed = CommandLib.ParseArguments<float>(arguments, out var errors);
             if (!CompoundIndex.TryParse(parameters[parameters.Length - 1], out var index))
             {
-                errors.Add(parameters[parameters.Length]);
+                errors.Add(parameters[parameters.Length-1]);
             }
 
             if (errors.Count != 0)
@@ -60,7 +60,7 @@ namespace GraphicsEditor.Commands.Transform
                 var shape = Root.GetShapeAt(index);
                 Process(parsed, shape);
             }
-            catch
+            catch (IndexOutOfRangeException)
             {
                 Console.WriteLine($"Не найдена фигура с идентификатором {index}!");
             }

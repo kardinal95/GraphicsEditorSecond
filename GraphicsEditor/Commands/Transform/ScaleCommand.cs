@@ -9,7 +9,7 @@ namespace GraphicsEditor.Commands.Transform
     /// <summary>
     ///     Команда для изменения размера фигуры на указанный коэффициент
     /// </summary>
-    class ScaleCommand : BaseTransformCommand
+    public class ScaleCommand : BaseTransformCommand
     {
         public override string Name => "scale";
         public override string Help => "Изменить размер фигуры";

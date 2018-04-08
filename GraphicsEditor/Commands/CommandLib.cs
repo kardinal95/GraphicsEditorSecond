@@ -8,7 +8,7 @@ namespace GraphicsEditor.Commands
     /// <summary>
     ///     Класс со вспомогательными методами для команд
     /// </summary>
-    static class CommandLib
+    public static class CommandLib
     {
         /// <summary>
         ///     Преобразует входные строковые параметры в список параметров указанного типа

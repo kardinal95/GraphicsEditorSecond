@@ -8,7 +8,7 @@ namespace GraphicsEditor.Commands.Transform
     /// <summary>
     ///     Команда для переноса фигуры на указанный вектор
     /// </summary>
-    class TranslateCommand : BaseTransformCommand
+    public class TranslateCommand : BaseTransformCommand
     {
         public override string Name => "translate";
         public override string Help => "Перенести фигуру на указанный вектор";

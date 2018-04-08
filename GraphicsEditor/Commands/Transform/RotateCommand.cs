@@ -9,7 +9,7 @@ namespace GraphicsEditor.Commands.Transform
     /// <summary>
     ///     Команда для поворота фигуры вокруг указанной точки
     /// </summary>
-    class RotateCommand : BaseTransformCommand
+    public class RotateCommand : BaseTransformCommand
     {
         public override string Name => "rotate";
         public override string Help => "Повернуть фигуру вокруг указанной точки";

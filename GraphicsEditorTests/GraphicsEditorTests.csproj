@@ -64,6 +64,13 @@
     <Compile Include="Commands\Shape\PointCommandTest.cs" />
     <Compile Include="Commands\Shape\BaseShapeCommandTest.cs" />
     <Compile Include="Commands\Shape\DummyShapeCommand.cs" />
+    <Compile Include="Commands\CommandLibTest.cs" />
+    <Compile Include="Commands\Transform\ScaleCommandTest.cs" />
+    <Compile Include="Commands\Transform\TranslateCommandTest.cs" />
+    <Compile Include="Commands\Transform\RotateCommandTest.cs" />
+    <Compile Include="Commands\Transform\BaseTransformCommandTest.cs" />
+    <Compile Include="Commands\Transform\DummyTransformCommand.cs" />
+    <Compile Include="TransformationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\BasicShapeTest.cs" />
     <Compile Include="Shapes\EllipseShapeTest.cs" />
